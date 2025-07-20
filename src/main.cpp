@@ -14,10 +14,10 @@
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_video.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <string>
-#include <time.h>
+#include <ctime>
 
 /* Declara as superficies do SDL, variaveis globais */
 SDL_Window *window = NULL;
@@ -509,7 +509,7 @@ void clean_up() {
   SDL_FreeSurface(menu);
   SDL_FreeSurface(menu2);
   SDL_FreeSurface(credito);
-  SDL_FreeSurface(screen);
+  //SDL_FreeSurface(screen);
   // Fecha as fontes
   TTF_CloseFont(font);
   TTF_CloseFont(font2);
@@ -764,17 +764,18 @@ void escreve_arq() {
   PLACAR dados[9];
   int i = 0, j;
 
-  arq = fopen("score.dad", "rb"); // abre o arquivo binario no modo leitura
+  arq = fopen("./score.dad", "rb"); // abre o arquivo binario no modo leitura
 
   if (arq !=
       NULL) // se o arquivo existir, pega os ultimos nove ,ou menos, placares
   {
     while (i < 9 && fread(&dados[i], sizeof(PLACAR), 1, arq) == 1)
       i++;
+      fclose(arq);
   }
-  fclose(arq);
 
-  arq = fopen("score.dad", "wb"); // abre no modo escrita, excluindo o arquivo
+
+  arq = fopen("./score.dad", "wb"); // abre no modo escrita, excluindo o arquivo
                                   // antigo e criando um novo
 
   fwrite(&score, sizeof(PLACAR), 1, arq); // escreve o placar da ultima partida
@@ -1070,7 +1071,7 @@ void mostra_score() {
     apply_surface(550, 10, placar, screen);
     SDL_FreeSurface(placar);
 
-    arq = fopen("score.dad", "rb"); // abre o arquivo no modo texto
+    arq = fopen("./score.dad", "rb"); // abre o arquivo no modo texto
     if (arq != NULL)                // se o arquivo existir
     {
       placar = TTF_RenderText_Solid(font2, "Ultimos 10 Scores", textColor);
