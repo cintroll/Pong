@@ -23,3 +23,5 @@ bool Pong::Initialize() {
   std::cout << "Jogo inicializado com sucesso!" << std::endl;
   return true;
 }
+
+void Pong::Cleanup() {}
