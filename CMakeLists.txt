@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Pong VERSION 1.0.0)
+project(Pong VERSION 2.0.0)
 
 # Configurações do compilador
 set(CMAKE_CXX_STANDARD 17)
@@ -27,7 +27,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 # Definir estrutura de diretórios
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(ASSETS_DIR "${CMAKE_SOURCE_DIR}/assets")
 
 # Coletar arquivos fonte recursivamente
@@ -36,17 +35,12 @@ file(GLOB_RECURSE SOURCES
     "${SRC_DIR}/*.c"
 )
 
-file(GLOB_RECURSE HEADERS
-    "${INCLUDE_DIR}/*.h"
-    "${INCLUDE_DIR}/*.hpp"
-)
-
 # Criar executável
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Incluir diretórios
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${INCLUDE_DIR}
+    ${SRC_DIR}
     ${SDL2_INCLUDE_DIRS}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}
@@ -76,7 +70,6 @@ endif()
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "Source directory: ${SRC_DIR}")
-message(STATUS "Include directory: ${INCLUDE_DIR}")
 
 # Informações sobre as bibliotecas encontradas
 message(STATUS "SDL2 found: ${SDL2_FOUND}")
