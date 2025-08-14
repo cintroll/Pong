@@ -1,4 +1,5 @@
 #include "Pong.h"
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
@@ -16,6 +17,12 @@ bool Pong::Initialize() {
   if (IMG_Init(imgFlags) != 0) {
     std::cerr << "Erro ao inicializar SDL_image: " << IMG_GetError()
               << std::endl;
+    return false;
+  }
+
+  if (!window.Create("Pong the ping", 800, 600)) {
+    std::cerr << "Erro ao criar janela" << std::endl;
+    return false;
   }
 
   isRunning = true;
@@ -24,4 +31,15 @@ bool Pong::Initialize() {
   return true;
 }
 
-void Pong::Cleanup() {}
+void Pong::Cleanup() {
+  if (isRunning) {
+    window.Destroy();
+
+    IMG_Quit();
+    SDL_Quit();
+
+    isRunning = false;
+
+    std::cout << "Jogo finalizado!" << std::endl;
+  }
+}

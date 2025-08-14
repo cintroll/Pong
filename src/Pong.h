@@ -1,4 +1,5 @@
 #pragma once
+#include "engine/Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_image.h>
@@ -9,7 +10,7 @@
 class Pong {
 private:
   bool isRunning;
-
+  Window window;
   // std::vector<std::unique_ptr<void>> gameObjects;
 
 public:
